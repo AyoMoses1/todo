@@ -5,12 +5,14 @@ import paths from './utils/paths';
 import SignIn from './views/Sgnin/SignIn';
 import SignUp from './views/Sgnin/SignUp';
 import Todos from './views/Todos/Todos';
+import Layout from './components/Layout';
+import './App.css';
 
 function App() {
   return (
     <Routes>
-      <Route path={paths.home} element={<Todos />}>
-        <Route index element={<SignIn />} />
+      <Route path={paths.home} element={<Layout />}>
+        <Route path="/" element={<Todos />} />
         {/* <Route path={paths.customers} element={<CustomerBase />}>
           <Route index element={<Customers />} />
           <Route path=":customerId" element={<CustomerDetail />} />

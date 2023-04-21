@@ -1,0 +1,101 @@
+.container {
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2em;
+  padding: 2rem 9.188rem 1.625rem 1.688rem;
+  border: 1px solid #e8e8e8;
+}
+
+.oval {
+  width: 5.625rem;
+  height: 5.625rem;
+  padding: 0.63rem 0.625rem 0.75rem 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circularProgress {
+  position: absolute;
+  border-radius: 50%;
+  width: 4.25rem;
+  height: 4.25rem;
+  border: 5px solid #379cf6;
+  border-left-color: #e8e8e8;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.statistics {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bookDetails {
+  width: 30%;
+}
+
+.category {
+  opacity: 0.5;
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #121212;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.title {
+  color: rgb(0, 0, 0);
+}
+
+.author {
+  color: #4386bf;
+  opacity: 0.7;
+}
+
+.button {
+  background: transparent;
+  border: none;
+  padding-left: 0;
+  color: #4386bf;
+  font-size: 0.875rem;
+  font-weight: 300;
+  opacity: 0.7;
+}
+
+.actions {
+  margin-top: 1rem;
+}
+
+.chapter {
+  color: #121212;
+}
+
+.chapterName {
+  margin: 0.5rem 0 2rem;
+}
+
+.chapterButton {
+  background: #0290ff;
+  border: none;
+  color: #e8e8e8;
+  padding: 0.5em 1em;
+  border-radius: 3px;
+  font-weight: 300;
+}
+
+.score {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  color: #121212;
+}
+
+.completed {
+  opacity: 0.5;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: normal;
+  color: #121212;
+}
