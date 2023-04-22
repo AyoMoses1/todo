@@ -10,7 +10,6 @@ const initialState = {
 const BASE_URL = "http://localhost:8080/api/v1";
 
 export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
-  console.log(BASE_URL, "iiik");
   const response = await axios.get(`${BASE_URL}/todos`, {
     headers: { Authorization: `Bearer ${localStorage.jwtauth}` },
   });
@@ -23,10 +22,19 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
 //   return id;
 // });
 
-// export const addBook = createAsyncThunk('books/addBook', async (book) => {
-//   await axios.post(BASE_URL, book);
-//   return book;
-// });
+export const addTodo = createAsyncThunk('books/addTodo', async (state) => {
+  const payload = {
+    title: state.title,
+    description: state.description,
+    category_id: state.category_id.id,
+    due_date: state.due_date,
+    priority_id: state.priority_id.id,
+  };
+  const response = await axios.post(`${BASE_URL}/todos`, payload, {
+    headers: { Authorization: `Bearer ${localStorage.jwtauth}` },
+  });
+  console.log(response)
+});
 
 const bookSlice = createSlice({
   name: "todos",
@@ -38,9 +46,9 @@ const bookSlice = createSlice({
       newState.todos = action.payload;
       return newState;
     });
-    // builder.addCase(addBook.fulfilled, (state, action) => {
-    //   state.books.push(action.payload);
-    // });
+    builder.addCase(addTodo.fulfilled, (state, action) => {
+      state.books.push(action.payload);
+    });
     // builder.addCase(removeBook.fulfilled, (state, action) => {
     //   const newState = { ...state };
     //   newState.books = state.books.filter((book) => book.item_id !== action.payload);

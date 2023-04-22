@@ -41,27 +41,24 @@ body {
   justify-content: space-between;
 }
 
+.form-inputs > div {
+  border-radius: 4px;
+  /* border: solid 1px #e8e8e8; */
+  background-color: var(--white-two);
+  width: 40% !important;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+}
 .todo_form input {
   padding: 0.813rem 1.063rem;
-  border-radius: 4px;
-  border: solid 1px #e8e8e8;
-  background-color: var(--white-two);
 }
 
-.todo_form input:focus {
-  outline: none;
-  border: 1px solid #0290ff;
-}
-
-.todo_form input:first-child {
-  width: 40%;
-}
 
 .todo_form input:nth-child(2) {
   width: 20%;
 }
 
-.todo_form button,
+.form_button,
 .categories-btn {
   cursor: pointer;
   width: 20%;

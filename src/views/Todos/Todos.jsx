@@ -12,6 +12,10 @@ function Todos() {
     dispatch(fetchTodos());
   }, [dispatch]);
 
+  const handleRefresh = () => {
+    dispatch(fetchTodos());
+  };
+
   const todos = useSelector((state) => state.todosReducer.todos).todos;
 
   return (
@@ -28,7 +32,7 @@ function Todos() {
           ))
         : ""}
       <div className="divider" />
-      <Form />
+      <Form handleRefresh={handleRefresh} />
     </>
   );
 }

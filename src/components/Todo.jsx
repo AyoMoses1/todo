@@ -27,7 +27,7 @@ function Todo({
   return (
     <div className={style.container}>
       <div className={style.todoDetails}>
-        <p className={style.category}>{categoryName.name}</p>
+        <p className={style.category}>{categoryName?.name}</p>
         <h2 className={style.title}>{title}</h2>
         <div className={style.actions}>
           <button type="button" className={style.button}>
