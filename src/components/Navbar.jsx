@@ -1,23 +1,21 @@
-/*eslint-disable*/
-import React from "react";
-import { NavLink } from "react-router-dom";
-import Button from "@mui/material/Button";
-import styles from "../styles/Navbar.module.css";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import styles from '../styles/Navbar.module.css';
 
 const links = [
-  { path: "/", text: "Tasks" },
-  { path: "categories", text: "Categories" },
+  { path: '/', text: 'Tasks' },
+  { path: 'categories', text: 'Categories' },
 ];
 
 const Navbar = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("jwtauth");
-    navigate("/login");
+    localStorage.removeItem('jwtauth');
+    navigate('/login');
   };
 
-  const user = localStorage.getItem("todo-user");
+  const user = localStorage.getItem('todo-user');
 
   return (
     <>
@@ -35,12 +33,14 @@ const Navbar = () => {
           ))}
         </ul>
         <div className={styles.user}>
-          Welcome {user}
+          Welcome
+          {' '}
+          {user}
           <Button
             variant="contained"
             href="#contained-buttons"
             onClick={handleLogout}
-            sx={{marginLeft:'10px'}}
+            sx={{ marginLeft: '10px' }}
           >
             Logout
           </Button>

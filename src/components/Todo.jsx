@@ -1,16 +1,16 @@
-/*eslint-disable*/
-import React from "react";
-import Proptypes from "prop-types";
+import React, { useEffect } from 'react';
+import Proptypes from 'prop-types';
 
-import { useDispatch, useSelector } from "react-redux";
-import style from "../styles/Todo.module.css";
-import { useEffect } from "react";
-import { fetchCategories } from "./../redux/categories/categoriesSlice";
-import { fetchPriorities } from "./../redux/priorities/prioritiesSlice";
-import Dialog from './Dialog'
-import { deleteTodo } from "../redux/todos/todosSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import style from '../styles/Todo.module.css';
+import { fetchCategories } from '../redux/categories/categoriesSlice';
+import { fetchPriorities } from '../redux/priorities/prioritiesSlice';
+import Dialog from './Dialog';
+import { deleteTodo } from '../redux/todos/todosSlice';
 
-function Todo({ title, priority, id, category, completed, handleRefresh}) {
+function Todo({
+  title, priority, id, category, completed, handleRefresh,
+}) {
   const [open, setOpen] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -32,11 +32,10 @@ function Todo({ title, priority, id, category, completed, handleRefresh}) {
   const categoryName = categories.find((e) => e.id === category);
   const priorityName = priorities.find((e) => e.id === priority);
 
-
   const handleDelete = () => {
-    dispatch(deleteTodo(id))
-    handleRefresh()
-  }
+    dispatch(deleteTodo(id));
+    handleRefresh();
+  };
   return (
     <div className={style.container}>
       <div className={style.todoDetails}>
@@ -59,12 +58,19 @@ function Todo({ title, priority, id, category, completed, handleRefresh}) {
         </div>
         <div>
           <h2 className={style.score}>64%</h2>
-          <span className={style.completed}>completed</span>
+          <span className={style.completed}>{completed ? 'Completed' : 'Not Completed'}</span>
         </div>
       </div>
       <div className="chapter">
-        <span className={style.chapter}> CATEGORY: {categoryName?.name} </span>
-        <h3 className={style.chapterName}>PRIORITY: {priorityName?.name}</h3>
+        <span className={style.chapter}>
+          {' '}
+          CATEGORY:
+          {categoryName?.name}
+        </span>
+        <h3 className={style.chapterName}>
+          PRIORITY:
+          {priorityName?.name}
+        </h3>
         <button
           type="button"
           className={style.chapterButton}
@@ -92,4 +98,6 @@ Todo.propTypes = {
   priority: Proptypes.string.isRequired,
   id: Proptypes.string.isRequired,
   category: Proptypes.string.isRequired,
+  completed: Proptypes.bool.isRequired,
+  handleRefresh: Proptypes.string.isRequired,
 };

@@ -1,46 +1,22 @@
-/*eslint-disable*/
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import {
-//   TextField,
-//   MenuItem,
-//   Select,
-//   FormControl,
-//   InputLabel,
-//   FormControlLabel,
-//   Checkbox,
-// } from '@material-ui/core';
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-
-// import { v4 as uuidv4 } from 'uuid';
-// import { addBook } from '../redux/books/booksSlice';
-import { fetchCategories } from "./../redux/categories/categoriesSlice";
-import { fetchPriorities } from "./../redux/priorities/prioritiesSlice";
-import { useEffect } from "react";
-import { addTodo } from "./../redux/todos/todosSlice";
-import { fetchTodos } from './../redux/todos/todosSlice';
+/*eslint-disable*/ 
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Proptypes from 'prop-types';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { fetchCategories } from '../redux/categories/categoriesSlice';
+import { fetchPriorities } from '../redux/priorities/prioritiesSlice';
+import { addTodo, fetchTodos } from '../redux/todos/todosSlice';
 
 const initialValues = {
-  title: "",
-  description: "",
+  title: '',
+  description: '',
   category_id: null,
-  due_date: "",
+  due_date: '',
   priority_id: null,
 };
 
-// const categories = [
-//   'Action',
-//   'Non-Fiction',
-//   'Fiction',
-//   'Love',
-//   'Mystery',
-//   'Science Fiction',
-// ];
-
-// const getRandomNumber = () => Math.floor(Math.random() * 5) + 1;
-
-function Form({handleRefresh}) {
+function Form({ handleRefresh }) {
   const [state, setState] = useState(initialValues);
 
   const dispatch = useDispatch();
@@ -55,7 +31,7 @@ function Form({handleRefresh}) {
   const handleSubmit = () => {
     dispatch(addTodo({ ...state }));
     setState(initialValues);
-    handleRefresh()
+    handleRefresh();
   };
 
   const handleSelect = (newValue, fieldName) => {
@@ -80,10 +56,10 @@ function Form({handleRefresh}) {
           variant="outlined"
           value={state.title}
           onChange={handleChange}
-          
+
           autoComplete="off"
           inputProps={{ style: { fontSize: 15 } }}
-          InputLabelProps={{ style: { fontSize: 15, color: "GrayText" } }}
+          InputLabelProps={{ style: { fontSize: 15, color: 'GrayText' } }}
         />
         <TextField
           name="description"
@@ -94,7 +70,7 @@ function Form({handleRefresh}) {
           onChange={handleChange}
           autoComplete="off"
           inputProps={{ style: { fontSize: 15 } }}
-          InputLabelProps={{ style: { fontSize: 15, color: "GrayText" } }}
+          InputLabelProps={{ style: { fontSize: 15, color: 'GrayText' } }}
         />
         <TextField
           name="due_date"
@@ -102,10 +78,10 @@ function Form({handleRefresh}) {
           type="date"
           value={state.due_date}
           onChange={handleChange}
-          
+
           autoComplete="off"
           inputProps={{ style: { fontSize: 15 } }}
-          InputLabelProps={{ style: { fontSize: 15, color: "GrayText" } }}
+          InputLabelProps={{ style: { fontSize: 15, color: 'GrayText' } }}
         />
 
         <Autocomplete
@@ -113,9 +89,9 @@ function Form({handleRefresh}) {
           name="category_id"
           value={state.category_id}
           options={categories}
-          getOptionLabel={(option) => option?.name ?? ""}
+          getOptionLabel={(option) => option?.name ?? ''}
           getOptionSelected={(option, value) => option.id === value.id}
-          onChange={(event, newValue) => handleSelect(newValue, "category_id")}
+          onChange={(event, newValue) => handleSelect(newValue, 'category_id')}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -131,9 +107,9 @@ function Form({handleRefresh}) {
           name="priority_id"
           value={state.priority_id}
           options={priorities}
-          getOptionLabel={(option) => option?.name ?? ""}
+          getOptionLabel={(option) => option?.name ?? ''}
           getOptionSelected={(option, value) => option.id === value.id}
-          onChange={(event, newValue) => handleSelect(newValue, "priority_id")}
+          onChange={(event, newValue) => handleSelect(newValue, 'priority_id')}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -153,3 +129,8 @@ function Form({handleRefresh}) {
 }
 
 export default Form;
+
+Form.propTypes = {
+  handleRefresh: Proptypes.func.isRequired,
+
+};
