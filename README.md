@@ -65,7 +65,7 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://ayomoses1.github.io/Awesome-Books/)
+- [Live Demo Link](https://ayomosestodo.web.app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
