@@ -6,10 +6,10 @@ const initialState = {
   categories: [],
 };
 
-const BASE_URL = "http://localhost:8080/api/v1";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const fetchCategories = createAsyncThunk("categories/fetchCategories", async () => {
-  const response = await axios.get(`${BASE_URL}/categories`);
+  const response = await axios.get(`${BASE_URL}categories`);
   return response.data;
 });
 

@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+import endpoints from "./../../utils/endpoints";
 
 function Copyright() {
   return (
@@ -36,15 +37,21 @@ export default function SignIn() {
   const handleSignIn = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const res = await axios.post("http://localhost:8080/api/v1/login", {
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const res = await axios
+      .post(`${process.env.REACT_APP_BASE_URL}${endpoints.login}`, {
+        email: data.get("email"),
+        password: data.get("password"),
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
+
     if (res.status === 200) {
-      console.log(res.data.token);
       localStorage.setItem("jwtauth", res.data.token);
       localStorage.setItem("todo-user", res.data.name);
       navigate("/");
+    } else {
+      alert("Email or Password doesn't exist");
     }
   };
 

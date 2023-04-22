@@ -6,12 +6,12 @@ const initialState = {
   priorities: [],
 };
 
-const BASE_URL = "http://localhost:8080/api/v1";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const fetchPriorities = createAsyncThunk(
   "categories/fetchPriorities",
   async () => {
-    const response = await axios.get(`${BASE_URL}/priorities`);
+    const response = await axios.get(`${BASE_URL}priorities`);
     return response.data;
   }
 );

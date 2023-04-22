@@ -21,6 +21,7 @@ function App() {
   return (
       <Routes>
         <Route path={paths.login} element={<SignIn />} />
+        <Route path={paths.signup} element={<SignUp />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Todos />} />
         </Route>

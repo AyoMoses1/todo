@@ -1,7 +1,7 @@
 /*eslint-disable*/ 
 const endpoints = {
-  agent: "/agents",
   login:"login",
+  register: "register",
   authEndpoint: "/agents/login",
   agentDetails: "/agents/logged-in-details",
   forgetPassword: "/agents/password/reset",

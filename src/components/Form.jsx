@@ -69,7 +69,6 @@ function Form({handleRefresh}) {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(state, "updated state!!!");
   };
   return (
     <form action="#" method="post" className="todo_form">
