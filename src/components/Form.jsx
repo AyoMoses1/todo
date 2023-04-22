@@ -37,7 +37,7 @@ function Form() {
     setState(initialValues);
   };
   return (
-    <form action="#" method="post" className="contact_form">
+    <form action="#" method="post" className="todo_form">
       <h1>ADD NEW BOOK</h1>
       <div className="form-inputs">
         <input
