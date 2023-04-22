@@ -49,7 +49,7 @@ function Form({ handleRefresh }) {
   return (
     <form action="#" method="post" className="todo_form">
       <h1>ADD NEW TODO</h1>
-      <div className="form-inputs">
+      <div className="form-inputs" id="form_input">
         <TextField
           name="title"
           label="title"
