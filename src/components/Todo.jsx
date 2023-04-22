@@ -1,17 +1,34 @@
+/*eslint-disable*/ 
 import React from 'react';
 import Proptypes from 'prop-types';
 // import { removeTodo } from '../redux/Todos/TodosSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import style from '../styles/Todo.module.css';
+import { useEffect } from 'react';
+import { fetchCategories } from './../redux/categories/categoriesSlice';
+import { fetchPriorities } from './../redux/priorities/prioritiesSlice';
 
 function Todo({
-  title, author, id, category,
+  title, priority, id, category,
 }) {
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchPriorities())
+  }, [dispatch]);
+
+  const categories = useSelector((state) => state.categoriesReducer.categories);
+  const priorities = useSelector((state) => state.prioritiesReducer.priorities);
+  const categoryName = categories.find(e => e.id === category) 
+  const priorityName = priorities.find(e => e.id === priority) 
+
+
   return (
     <div className={style.container}>
       <div className={style.todoDetails}>
-        <p className={style.category}>{category}</p>
+        <p className={style.category}>{categoryName.name}</p>
         <h2 className={style.title}>{title}</h2>
-        <span className={style.author}>{author}</span>
         <div className={style.actions}>
           <button type="button" className={style.button}>
             Comments
@@ -36,10 +53,10 @@ function Todo({
         </div>
       </div>
       <div className="chapter">
-        <span className={style.chapter}>CURRENT CHAPTER</span>
-        <h3 className={style.chapterName}>Chapter 17</h3>
+        <span className={style.chapter}> CATEGORY: {categoryName?.name} </span>
+        <h3 className={style.chapterName}>PRIORITY: {priorityName?.name}</h3>
         <button type="button" className={style.chapterButton}>
-          UPDATE PROGRESS
+          UPDATE TODO
         </button>
       </div>
     </div>
@@ -50,7 +67,7 @@ export default Todo;
 
 Todo.propTypes = {
   title: Proptypes.string.isRequired,
-  author: Proptypes.string.isRequired,
+  priority: Proptypes.string.isRequired,
   id: Proptypes.string.isRequired,
   category: Proptypes.string.isRequired,
 };

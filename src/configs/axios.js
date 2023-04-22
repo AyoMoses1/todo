@@ -9,7 +9,7 @@ export const instance = axios.create({
 export const Authinstance = axios.create({
   baseURL : 'localhost:8080/api/v1/',
   headers: {
-    Authorization: `<Your Auth Token>`,
+    Authorization: localStorage.jwtauth,
     'Content-Type': "application/json",
   }, 
   // .. other options

@@ -1,54 +1,32 @@
-import React from 'react';
-import Form from '../../components/Form';
-import Todo from '../../components/Todo';
+/*eslint-disable*/
+import React, { useEffect } from "react";
+import Form from "../../components/Form";
+import Todo from "../../components/Todo";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTodos } from "../../redux/todos/todosSlice";
+import { fetchCategories } from "./../../redux/categories/categoriesSlice";
 
 function Todos() {
-  const todosArray = [
-    {
-      item_id: 1,
-      title: 'Read a book',
-      author: 'Ayo Moses',
-      category: 'Action',
-    },
-    {
-      item_id: 1,
-      title: 'Read a book',
-      author: 'Ayo Moses',
-      category: 'Action',
-    },
-    {
-      item_id: 1,
-      title: 'Read a book',
-      author: 'Ayo Moses',
-      category: 'Action',
-    },
-    {
-      item_id: 1,
-      title: 'Read a book',
-      author: 'Ayo Moses',
-      category: 'Action',
-    },
-    {
-      item_id: 1,
-      title: 'Read a book',
-      author: 'Ayo Moses',
-      category: 'Action',
-    },
-  ];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchTodos());
+  }, [dispatch]);
+
+  const todos = useSelector((state) => state.todosReducer.todos).todos;
 
   return (
     <>
-      {todosArray.length > 0
-        ? todosArray.map((data) => (
-          <Todo
-            key={data.item_id}
-            title={data.title}
-            author={data.author}
-            id={data.item_id}
-            category={data.category}
-          />
-        ))
-        : ''}
+      {todos
+        ? todos.map((data) => (
+            <Todo
+              key={data.item_id}
+              title={data.title}
+              priority={data.priority_id}
+              id={data.item_id}
+              category={data.category_id}
+            />
+          ))
+        : ""}
       <div className="divider" />
       <Form />
     </>
