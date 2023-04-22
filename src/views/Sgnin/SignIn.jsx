@@ -40,10 +40,11 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    if(res.status === 200){
-      console.log(res.data.token)
+    if (res.status === 200) {
+      console.log(res.data.token);
       localStorage.setItem("jwtauth", res.data.token);
-       navigate('/');
+      localStorage.setItem("todo-user", res.data.name);
+      navigate("/");
     }
   };
 
