@@ -1,15 +1,16 @@
 /*eslint-disable*/
 import React from "react";
 import Proptypes from "prop-types";
-// import { removeTodo } from '../redux/Todos/TodosSlice';
+
 import { useDispatch, useSelector } from "react-redux";
 import style from "../styles/Todo.module.css";
 import { useEffect } from "react";
 import { fetchCategories } from "./../redux/categories/categoriesSlice";
 import { fetchPriorities } from "./../redux/priorities/prioritiesSlice";
 import Dialog from './Dialog'
+import { deleteTodo } from "../redux/todos/todosSlice";
 
-function Todo({ title, priority, id, category, completed}) {
+function Todo({ title, priority, id, category, completed, handleRefresh}) {
   const [open, setOpen] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -31,6 +32,11 @@ function Todo({ title, priority, id, category, completed}) {
   const categoryName = categories.find((e) => e.id === category);
   const priorityName = priorities.find((e) => e.id === priority);
 
+
+  const handleDelete = () => {
+    dispatch(deleteTodo(id))
+    handleRefresh()
+  }
   return (
     <div className={style.container}>
       <div className={style.todoDetails}>
@@ -41,8 +47,8 @@ function Todo({ title, priority, id, category, completed}) {
             Comments
           </button>
           <span className="div" />
-          <button type="button" className={style.button}>
-            Remove
+          <button type="button" className={style.button} onClick={handleDelete}>
+            Delete Todo
           </button>
           <span className="div" />
         </div>
@@ -73,6 +79,7 @@ function Todo({ title, priority, id, category, completed}) {
         id={id}
         title={title}
         completed={completed}
+        handleRefresh={handleRefresh}
       />
     </div>
   );

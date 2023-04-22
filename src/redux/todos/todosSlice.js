@@ -4,9 +4,8 @@ import axios from "axios";
 
 const initialState = {
   todos: [],
-  selectedTodo: {}
+  selectedTodo: {},
 };
-
 
 const BASE_URL = "http://localhost:8080/api/v1";
 
@@ -14,24 +13,33 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
   const response = await axios.get(`${BASE_URL}/todos`, {
     headers: { Authorization: `Bearer ${localStorage.jwtauth}` },
   });
-  const res = response.data;
-  return res;
+  console.log(response.data, "rrr");
+  return response.data.todos;
 });
 
-export const removeBook = createAsyncThunk("books/removeBook", async (id) => {
-  await axios.delete(`${BASE_URL}/${id}`);
+export const deleteTodo = createAsyncThunk("books/deleteTodo", async (id) => {
+  console.log(id, "payload")
+  await axios.delete(`${BASE_URL}/todos/${id}`, {
+    headers: { Authorization: `Bearer ${localStorage.jwtauth}` },
+  });
   return id;
 });
 
-export const updateTodo = createAsyncThunk("books/updateTodo", async (payload) => {
-  console.log(payload)
-  const response = await axios.put(`${BASE_URL}/todos/${payload.id}`, payload.data, {
-    headers: { Authorization: `Bearer ${localStorage.jwtauth}` },
-  });
-  if(response.status === 200){
+export const updateTodo = createAsyncThunk(
+  "books/updateTodo",
+  async (payload) => {
+    const response = await axios.put(
+      `${BASE_URL}/todos/${payload.id}`,
+      payload.data,
+      {
+        headers: { Authorization: `Bearer ${localStorage.jwtauth}` },
+      }
+    );
+    if (response.status === 200) {
+    }
+    return response.data;
   }
-  return response.data;
-});
+);
 
 export const addTodo = createAsyncThunk("books/addTodo", async (state) => {
   const payload = {
@@ -54,6 +62,7 @@ const bookSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchTodos.fulfilled, (state, action) => {
       const newState = { ...state };
+      console.log(action.payload, "action");
       newState.todos = action.payload;
       return newState;
     });
@@ -67,11 +76,15 @@ const bookSlice = createSlice({
           ? { ...book, [action.payload.name]: action.target.value }
           : book;
       });
-       newState.books = updatedBooks
-      // newState.books = state.books.filter(
-      //   (book) => book.item_id !== action.payload
-      // );
+      newState.books = updatedBooks;
+      
       return newState;
+    });
+    builder.addCase(deleteTodo.fulfilled, (state, action) => {
+      const newState = {...state}
+      newState.books = state.todos.filter(
+        (todo) => todo.id !== action.payload
+      );
     });
   },
 });

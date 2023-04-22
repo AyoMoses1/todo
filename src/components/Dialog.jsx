@@ -22,11 +22,13 @@ export default function FormDialog({
   id,
   title,
   completed,
+  handleRefresh
 }) {
   const [state, setState] = useState({ title: title, completed: completed });
   const dispatch = useDispatch();
   const handleUpdate = () => {
     dispatch(updateTodo({ id: id, data:{...state} }));
+    handleRefresh()
     handleClose();
   };
 

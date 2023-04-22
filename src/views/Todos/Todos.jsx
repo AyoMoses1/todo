@@ -4,7 +4,6 @@ import Form from "../../components/Form";
 import Todo from "../../components/Todo";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTodos } from "../../redux/todos/todosSlice";
-import { fetchCategories } from "./../../redux/categories/categoriesSlice";
 
 function Todos() {
   const dispatch = useDispatch();
@@ -16,7 +15,7 @@ function Todos() {
     dispatch(fetchTodos());
   };
 
-  const todos = useSelector((state) => state.todosReducer.todos).todos;
+  const todos = useSelector((state) => state.todosReducer.todos);
 
   return (
     <>
@@ -29,6 +28,7 @@ function Todos() {
               id={data.id}
               category={data.category_id}
               completed={data.completed}
+              handleRefresh={handleRefresh}
             />
           ))
         : ""}
