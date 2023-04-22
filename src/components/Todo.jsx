@@ -1,28 +1,35 @@
-/*eslint-disable*/ 
-import React from 'react';
-import Proptypes from 'prop-types';
+/*eslint-disable*/
+import React from "react";
+import Proptypes from "prop-types";
 // import { removeTodo } from '../redux/Todos/TodosSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import style from '../styles/Todo.module.css';
-import { useEffect } from 'react';
-import { fetchCategories } from './../redux/categories/categoriesSlice';
-import { fetchPriorities } from './../redux/priorities/prioritiesSlice';
+import { useDispatch, useSelector } from "react-redux";
+import style from "../styles/Todo.module.css";
+import { useEffect } from "react";
+import { fetchCategories } from "./../redux/categories/categoriesSlice";
+import { fetchPriorities } from "./../redux/priorities/prioritiesSlice";
+import Dialog from './Dialog'
 
-function Todo({
-  title, priority, id, category,
-}) {
+function Todo({ title, priority, id, category, completed}) {
+  const [open, setOpen] = React.useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCategories());
-    dispatch(fetchPriorities())
+    dispatch(fetchPriorities());
   }, [dispatch]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   const categories = useSelector((state) => state.categoriesReducer.categories);
   const priorities = useSelector((state) => state.prioritiesReducer.priorities);
-  const categoryName = categories.find(e => e.id === category) 
-  const priorityName = priorities.find(e => e.id === priority) 
-
+  const categoryName = categories.find((e) => e.id === category);
+  const priorityName = priorities.find((e) => e.id === priority);
 
   return (
     <div className={style.container}>
@@ -38,9 +45,6 @@ function Todo({
             Remove
           </button>
           <span className="div" />
-          <button type="button" className={style.button}>
-            {`Edit ${id}`}
-          </button>
         </div>
       </div>
       <div className={style.statistics}>
@@ -55,10 +59,21 @@ function Todo({
       <div className="chapter">
         <span className={style.chapter}> CATEGORY: {categoryName?.name} </span>
         <h3 className={style.chapterName}>PRIORITY: {priorityName?.name}</h3>
-        <button type="button" className={style.chapterButton}>
+        <button
+          type="button"
+          className={style.chapterButton}
+          onClick={handleClickOpen}
+        >
           UPDATE TODO
         </button>
       </div>
+      <Dialog
+        open={open}
+        handleClose={handleClose}
+        id={id}
+        title={title}
+        completed={completed}
+      />
     </div>
   );
 }

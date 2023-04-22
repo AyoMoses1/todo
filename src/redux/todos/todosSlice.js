@@ -1,11 +1,12 @@
 /*eslint-disable*/
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Authinstance, instance } from "../../configs/axios";
 import axios from "axios";
 
 const initialState = {
   todos: [],
+  selectedTodo: {}
 };
+
 
 const BASE_URL = "http://localhost:8080/api/v1";
 
@@ -17,12 +18,22 @@ export const fetchTodos = createAsyncThunk("todos/fetchTodos", async () => {
   return res;
 });
 
-// export const removeBook = createAsyncThunk('books/removeBook', async (id) => {
-//   await axios.delete(`${BASE_URL}/${id}`);
-//   return id;
-// });
+export const removeBook = createAsyncThunk("books/removeBook", async (id) => {
+  await axios.delete(`${BASE_URL}/${id}`);
+  return id;
+});
 
-export const addTodo = createAsyncThunk('books/addTodo', async (state) => {
+export const updateTodo = createAsyncThunk("books/updateTodo", async (payload) => {
+  console.log(payload)
+  const response = await axios.put(`${BASE_URL}/todos/${payload.id}`, payload.data, {
+    headers: { Authorization: `Bearer ${localStorage.jwtauth}` },
+  });
+  if(response.status === 200){
+  }
+  return response.data;
+});
+
+export const addTodo = createAsyncThunk("books/addTodo", async (state) => {
   const payload = {
     title: state.title,
     description: state.description,
@@ -33,7 +44,7 @@ export const addTodo = createAsyncThunk('books/addTodo', async (state) => {
   const response = await axios.post(`${BASE_URL}/todos`, payload, {
     headers: { Authorization: `Bearer ${localStorage.jwtauth}` },
   });
-  console.log(response)
+  return response;
 });
 
 const bookSlice = createSlice({
@@ -49,11 +60,19 @@ const bookSlice = createSlice({
     builder.addCase(addTodo.fulfilled, (state, action) => {
       state.books.push(action.payload);
     });
-    // builder.addCase(removeBook.fulfilled, (state, action) => {
-    //   const newState = { ...state };
-    //   newState.books = state.books.filter((book) => book.item_id !== action.payload);
-    //   return newState;
-    // });
+    builder.addCase(updateTodo.fulfilled, (state, action) => {
+      const newState = { ...state };
+      const updatedBooks = state.books.map((book) => {
+        return book.id === action.payload.id
+          ? { ...book, [action.payload.name]: action.target.value }
+          : book;
+      });
+       newState.books = updatedBooks
+      // newState.books = state.books.filter(
+      //   (book) => book.item_id !== action.payload
+      // );
+      return newState;
+    });
   },
 });
 

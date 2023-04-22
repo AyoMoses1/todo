@@ -26,8 +26,9 @@ function Todos() {
               key={data.item_id}
               title={data.title}
               priority={data.priority_id}
-              id={data.item_id}
+              id={data.id}
               category={data.category_id}
+              completed={data.completed}
             />
           ))
         : ""}
